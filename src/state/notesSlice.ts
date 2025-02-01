@@ -31,6 +31,6 @@ export const notesSlice = createSlice({
 export const { add, remove, edit } = notesSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectCount = (state: RootState) => state.notes // state.counter.value
+export const selectNote = (state: RootState) => state.notes.noteList // state.counter.value
 
 export default notesSlice.reducer
