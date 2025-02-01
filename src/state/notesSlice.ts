@@ -18,8 +18,8 @@ export const notesSlice = createSlice({
         add: (state, action: PayloadAction<iNote>) => {
             return {...state, noteList: [...state.noteList, action.payload]}
         },
-        delete: (state, action: PayloadAction<number>) => {
-            return {...state, noteList: state.noteList.filter(n => n.id !== action.payload)}
+        remove: (state, action: PayloadAction<number>) => {
+            return {...state, noteList: state.noteList.filter(n => n.id !== action.payload)};
         },
         // Use the PayloadAction type to declare the contents of `action.payload`
         edit: (state, action: PayloadAction<iNote>) => {
@@ -28,7 +28,7 @@ export const notesSlice = createSlice({
     }
 })
 
-export const { add, delete, edit } = notesSlice.actions
+export const { add, remove, edit } = notesSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectCount = (state: RootState) => state.notes // state.counter.value
