@@ -4,7 +4,6 @@ import {useParams} from "react-router";
 import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import {selectItemById} from "../state/noteSelector.ts";
-import {RootState} from "../state/store.ts";
 
 export function NoteContent() {
     const {noteId} = useParams<string>();
@@ -13,6 +12,7 @@ export function NoteContent() {
     const [title, setTitle] = useState<string>(note?.title || '');
     const [text, setText] = useState<string>(note?.text || '');
     useEffect(() => {
+        // данные из store приходят не сразу, поэтому нужно повторно обновить state
         if (note?.id) {
             setTitle(note.title);
             setText(note.text);
