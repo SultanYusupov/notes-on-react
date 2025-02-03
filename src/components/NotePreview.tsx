@@ -19,7 +19,7 @@ export default function NotePreview({note}:PreviewProps) {
                onMouseLeave={() => toggleCursorPointer('default', 'none')}
         >
             <Toast.Header closeButton={false}>
-                <strong className="me-auto" onClick={() => navigate(`${note.id}`, {replace: false})}>{note.title}</strong>
+                <strong className="me-auto" onClick={() => navigate(`${note.id}`, {replace: false, state: {id: note.id}})}>{note.title}</strong>
                 <small onClick={() => navigate(`${note.id}`, {replace: false})}>{note.dateCreate}</small>
                 <CloseButton/>
             </Toast.Header>
