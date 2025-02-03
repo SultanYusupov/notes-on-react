@@ -1,6 +1,7 @@
 import {CloseButton, Toast} from "react-bootstrap";
 import {useState} from "react";
 import {iNote} from "../interfaces/iNote.ts";
+import {useNavigate} from "react-router";
 
 interface PreviewProps {
     note: iNote,
@@ -8,6 +9,7 @@ interface PreviewProps {
 
 export default function NotePreview({note}:PreviewProps) {
     const [toggleHover, setToggleHover] = useState({cursor: 'default', boxShadow: 'none'});
+    const navigate = useNavigate();
     function toggleCursorPointer(cursorStyle: string, borderStyle: string) {
         setToggleHover({cursor: cursorStyle, boxShadow: borderStyle})
     }
@@ -17,11 +19,11 @@ export default function NotePreview({note}:PreviewProps) {
                onMouseLeave={() => toggleCursorPointer('default', 'none')}
         >
             <Toast.Header closeButton={false}>
-                <strong className="me-auto">{note.title}</strong>
-                <small>{note.dateCreate}</small>
+                <strong className="me-auto" onClick={() => navigate(`${note.id}`, {replace: false})}>{note.title}</strong>
+                <small onClick={() => navigate(`${note.id}`, {replace: false})}>{note.dateCreate}</small>
                 <CloseButton/>
             </Toast.Header>
-            <Toast.Body>{note.text}</Toast.Body>
+            <Toast.Body onClick={() => navigate(`${note.id}`, {replace: false})}>{note.text}</Toast.Body>
         </Toast>
     );
 }
