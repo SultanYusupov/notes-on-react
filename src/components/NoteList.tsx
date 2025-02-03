@@ -1,9 +1,6 @@
-import {useAppDispatch, useAppSelector} from "../hooks/redux-hooks.ts";
+import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {RootState} from "../state/store.ts";
-import {useEffect, useRef} from "react";
-import {noteService} from "../services/note.service.ts";
 import {iNote} from "../interfaces/iNote.ts";
-import {add} from "../state/notesSlice.ts";
 import NotePreview from "./NotePreview.tsx";
 
 export default function NoteList() {
