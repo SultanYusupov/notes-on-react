@@ -1,18 +1,17 @@
 import {Card, Form} from "react-bootstrap";
 import {useState} from "react";
-import {useLocation} from "react-router";
+import {useLocation, useParams} from "react-router";
 import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import {selectItemById} from "../state/noteSelector.ts";
 
 export function NoteContent() {
     const {state} = useLocation();
-    const id:number = state.id;
+    const {noteId} = useParams<string>();
     const [showEditIcon, setEditIcon] = useState<boolean>(false);
-    const note:iNote | undefined = useAppSelector(state => selectItemById(state, id));
-    console.log(note)
-    const [title, setTitle] = useState<string>('');
-    const [text, setText] = useState<string>('');
+    const note:iNote | undefined = useAppSelector(state => selectItemById(state, noteId));
+    const [title, setTitle] = useState<string>(note?.title || '');
+    const [text, setText] = useState<string>(note?.text || '');
 
     return (
         <div style={{margin: '0 auto', width: '600px',}}>
