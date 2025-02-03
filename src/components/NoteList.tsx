@@ -18,7 +18,9 @@ export default function NoteList() {
         };
         asyncNoteListFunc().then((result: iNote[]) => {
             result.forEach(r => {
-                dispatch(add(r));
+                if (!notes.some((note) => note.id === r.id)) { // Проверка на дубликаты, когда возвращаемся из NoteContent
+                    dispatch(add(r));
+                }
             });
 
         });
