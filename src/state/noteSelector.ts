@@ -6,6 +6,6 @@ const selectNotes = (state: RootState) => state.notes.noteList;
 
 // Селектор для получения элемента по id
 export const selectItemById = createSelector(
-    [selectNotes, (_state: RootState, noteId: number) => noteId],
-    (noteList, noteId) => noteList.find(note => note.id === noteId)
+    [selectNotes, (_state: RootState, noteId: string) => noteId],
+    (noteList, noteId) => noteList.find(note => note.id === Number(noteId))
 );

@@ -4,6 +4,7 @@ import {useParams} from "react-router";
 import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import {selectItemById} from "../state/noteSelector.ts";
+import {Header} from "./Header.tsx";
 
 export function NoteContent() {
     const {noteId} = useParams<string>();
@@ -21,7 +22,10 @@ export function NoteContent() {
 
     return (
         <div style={{margin: '0 auto', width: '600px',}}>
-
+            <Header style={{margin: '1rem 0', with: '100%', padding: '0.1rem'}} displayBackButton={true}>
+                {showEditIcon && <i className="bi bi-check-lg" role={"button"}></i>}
+                <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}></i>
+            </Header>
             <Card style={{width: '100%'}}>
                 <Card.Body>
                     <Card.Title className={'border-bottom pb-2'}><Form.Control className={'border-0'} type={"text"}
