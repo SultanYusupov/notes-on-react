@@ -5,20 +5,34 @@ import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import {selectItemById} from "../state/noteSelector.ts";
 import {Header} from "./Header.tsx";
+import {noteService} from "../services/note.service.ts";
 
 export function NoteContent() {
-    const {noteId} = useParams<string>();
+    const {id} = useParams<string>();
+    const noteId: number = Number(id);
     const [showEditIcon, setEditIcon] = useState<boolean>(false);
-    const note:iNote | undefined = useAppSelector(state => selectItemById(state, noteId));
-    const [title, setTitle] = useState<string>(note?.title || '');
-    const [text, setText] = useState<string>(note?.text || '');
+    const [note, setNote] = useState<iNote>({id: noteId, title: '', text: '', dateCreate: ''});
+
+    const existingNote = useAppSelector(state => {
+        return selectItemById(state, noteId)
+    });
+    const asyncNoteItemFunc = async (id:string) => {
+        return await noteService.getNoteItem(id);
+    }
     useEffect(() => {
-        // данные из store приходят не сразу, поэтому нужно повторно обновить state
-        if (note?.id) {
-            setTitle(note.title);
-            setText(note.text);
+        if (id) {
+            if (existingNote) {
+                setNote(existingNote);
+            }
+            else {
+                asyncNoteItemFunc(id).then((res:iNote) => {
+                    console.log(res)
+                    setNote(res)
+                });
+            }
         }
-    }, [note?.id])
+
+    }, [existingNote, id]);
 
     return (
         <div style={{margin: '0 auto', width: '600px',}}>
@@ -29,12 +43,18 @@ export function NoteContent() {
             <Card style={{width: '100%'}}>
                 <Card.Body>
                     <Card.Title className={'border-bottom pb-2'}><Form.Control className={'border-0'} type={"text"}
-                                                                               value={title}
+                                                                               value={note.title}
                                                                                onFocus={() => setEditIcon(true)}
-                                                                               onChange={(e) => setTitle(e.target.value)}/></Card.Title>
+                                                                               onChange={(e) => setNote({
+                                                                                   ...note,
+                                                                                   title: e.target.value
+                                                                               })}/></Card.Title>
                     <Card.Text>
-                        <Form.Control className={'border-0'} as="textarea" rows={3} value={text}
-                                      onFocus={() => setEditIcon(true)} onChange={(e) => setText(e.target.value)}/>
+                        <Form.Control className={'border-0'} as="textarea" rows={3} value={note.text}
+                                      onFocus={() => setEditIcon(true)} onChange={(e) => setNote({
+                            ...note,
+                            text: e.target.value
+                        })}/>
                     </Card.Text>
                 </Card.Body>
             </Card>

@@ -30,7 +30,7 @@ function App() {
   return(
           <Routes>
             <Route path={'/'} element={<NoteList />}></Route>
-            <Route path={'/:noteId'} element={<NoteContent />}></Route>
+            <Route path={'/:id'} element={<NoteContent />}></Route>
               <Route path={'/new'} element={<NoteContent />}></Route>
           </Routes>
       )

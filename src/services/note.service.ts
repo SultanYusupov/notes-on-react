@@ -11,6 +11,7 @@ class NoteService {
 
     async getNoteItem(id: string) {
         const {data} = await axios.get<iNote>(this.URL+'/'+id);
+        data.id = Number(data.id);
         return data;
     }
 
