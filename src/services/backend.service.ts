@@ -3,7 +3,6 @@ import {iNote} from "../interfaces/iNote.ts";
 
 class BackendService {
     private URL = 'http://localhost:3001/note-list';
-    noteListLength: number = 0;
     async getNoteList() {
         const {data} = await axios.get<iNote[]>(this.URL);
         return data;
@@ -28,13 +27,6 @@ class BackendService {
     async deleteNote(id: string) {
         const {data} = await axios.delete<iNote>(this.URL+'/'+id);
         return data;
-    }
-
-    get listLength() {
-        return this.noteListLength;
-    }
-    set listLength(length: number) {
-        this.noteListLength = length;
     }
 }
 
