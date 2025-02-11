@@ -48,6 +48,7 @@ export function NoteContent() {
         // save data to storage to avoid making a request to the server
         // send new data to server
         setEditIcon(false);
+        note.dateCreate = new Date().toString();
         if (Number.isNaN(noteId)) {
             noteService.createNote(note).then(res => navigate(`/${res.id}`));
         }
