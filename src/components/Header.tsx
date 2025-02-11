@@ -12,7 +12,7 @@ export function Header({children, style, displayBackButton}:HeaderProps) {
     return (
         <header className={'d-flex justify-content-between align-items-baseline'} style={style}>
             {displayBackButton &&
-                <i className="bi bi-arrow-left-square" role={"button"} onClick={() => navigate(-1)}></i>}
+                <i className="bi bi-arrow-left-square" role={"button"} onClick={() => navigate("/")}></i>}
             <h1 className={'m-1'}>Заметки</h1>
             <section className="d-flex">
                 {children}

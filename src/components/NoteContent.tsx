@@ -1,6 +1,6 @@
 import {Card, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import {selectItemById} from "../state/noteSelector.ts";
@@ -11,6 +11,7 @@ export function NoteContent() {
     const {id} = useParams<string>();
     const noteId: number = Number(id);
     const [showEditIcon, setEditIcon] = useState(false);
+    const navigate = useNavigate();
     const existingNote = useAppSelector(state => {
         return selectItemById(state, noteId)
     });
@@ -44,10 +45,11 @@ export function NoteContent() {
         // check if state not changed
         // if state changed, update via use State
         // correct date
+        // save data to storage to avoid making a request to the server
         // send new data to server
         setEditIcon(false);
         if (Number.isNaN(noteId)) {
-            noteService.createNote(note).then(res => console.log(res))
+            noteService.createNote(note).then(res => navigate(`/${res.id}`));
         }
         else {
             noteService.editNote(id!, note).then(res => console.log(res))
