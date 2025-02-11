@@ -5,7 +5,7 @@ import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import {selectItemById} from "../state/noteSelector.ts";
 import {Header} from "./Header.tsx";
-import {noteService} from "../services/note.service.ts";
+import {noteService} from "../services/backend.service.ts";
 
 export function NoteContent() {
     const {id} = useParams<string>();

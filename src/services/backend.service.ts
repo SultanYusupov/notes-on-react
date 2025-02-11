@@ -1,7 +1,7 @@
 import axios from "axios";
 import {iNote} from "../interfaces/iNote.ts";
 
-class NoteService {
+class BackendService {
     private URL = 'http://localhost:3001/note-list';
     noteListLength: number = 0;
     async getNoteList() {
@@ -38,4 +38,4 @@ class NoteService {
     }
 }
 
-export const noteService = new NoteService();
+export const noteService = new BackendService();
