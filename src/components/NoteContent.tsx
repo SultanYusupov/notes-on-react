@@ -41,12 +41,7 @@ export function NoteContent() {
     }, [note.title, initialTitle, note.text, initialText])
 
     function save() {
-        // hide check icon
-        // check if state not changed
-        // if state changed, update via use State
-        // correct date
-        // save data to storage to avoid making a request to the server
-        // send new data to server
+        //TODO when we edit existing note and come back, the data does not update
         setEditIcon(false);
         note.dateCreate = new Date().toString();
         if (Number.isNaN(noteId)) {
