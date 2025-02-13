@@ -2,10 +2,12 @@ import {CloseButton, Toast} from "react-bootstrap";
 import {useState} from "react";
 import {iNote} from "../interfaces/iNote.ts";
 import {useNavigate} from "react-router";
+import {useDeleteNoteMutation} from "../state/api.ts";
 
 export default function NotePreview({note}:{note: iNote}) {
     const [toggleHover, setToggleHover] = useState({cursor: 'default', boxShadow: 'none'});
     const navigate = useNavigate();
+    const [deleteNote] = useDeleteNoteMutation();
     function toggleCursorPointer(cursorStyle: string, borderStyle: string) {
         setToggleHover({cursor: cursorStyle, boxShadow: borderStyle})
     }
@@ -43,6 +45,9 @@ export default function NotePreview({note}:{note: iNote}) {
             return `${date}, в ${time}`;
         }
     }
+    function remove(id:number) {
+        deleteNote(id);
+    }
     return(
         <Toast className={`cursor-wait d-inline-block m-1`} style={toggleHover}
                onMouseEnter={() => toggleCursorPointer('pointer', 'rgb(124 124 124) 0px 0px 8px 2px')}
@@ -51,7 +56,7 @@ export default function NotePreview({note}:{note: iNote}) {
             <Toast.Header closeButton={false}>
                 <strong className="me-auto" onClick={() => navigate(`${note.id}`, {replace: false})}>{note.title}</strong>
                 <small onClick={() => navigate(`${note.id}`, {replace: false})}>{formatDate(note.dateCreate)}</small>
-                <CloseButton/>
+                <CloseButton onClick={() => remove(note.id!)}/>
             </Toast.Header>
             <Toast.Body onClick={() => navigate(`${note.id}`, {replace: false})}>{note.text}</Toast.Body>
         </Toast>
