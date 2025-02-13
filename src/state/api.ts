@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {iNote, iNoteData} from "../interfaces/iNote.ts";
+import {iNote} from "../interfaces/iNote.ts";
 
 const API_URL = 'http://localhost:3001/note-list';
 export const noteApi = createApi({
@@ -10,7 +10,7 @@ export const noteApi = createApi({
         getNotes: builder.query<iNote[], void>({
             query: () => '/',
             providesTags: result =>
-                result ? [...result.map(({id}) => ({type: 'Notes', id} as const))]
+                result ? [...result.map(({id}) => ({type: 'Notes', id} as const)), { type: 'Notes', id: 'LIST' }]
                     : [{type: 'Notes', id: 'LIST'}]
         }),
         getNoteById: builder.query<iNote, number>({
@@ -32,19 +32,6 @@ export const noteApi = createApi({
                 method: 'PATCH'
             }),
             invalidatesTags: (result, error, { id }) => [{ type: 'Notes', id }],
-            // async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-            //     const patchResult = dispatch(
-            //         noteApi.util.updateQueryData('getNotes', null, (draft) => {
-            //             Object.assign(draft, patch)
-            //         }),
-            //     )
-            //     try {
-            //         await queryFulfilled;
-            //         console.log(queryFulfilled)
-            //     } catch {
-            //         patchResult.undo()
-            //     }
-            // },
         }),
         deleteNote: builder.mutation({
             query: (id:number) => ({

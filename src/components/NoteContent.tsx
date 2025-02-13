@@ -46,7 +46,6 @@ export function NoteContent() {
     }, [note.title, initialTitle, note.text, initialText])
 
     function save() {
-        //TODO when we edit existing note and come back, the data does not update
         setEditIcon(false);
         note.dateCreate = new Date().toString();
         if (Number.isNaN(noteId)) {
@@ -57,7 +56,7 @@ export function NoteContent() {
         }
         else {
             // noteService.editNote(id!, note).then(res => console.log(res))
-            editNote(note).then(res => console.log(res));
+            editNote(note);
         }
     }
 
