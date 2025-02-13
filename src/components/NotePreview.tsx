@@ -3,11 +3,7 @@ import {useState} from "react";
 import {iNote} from "../interfaces/iNote.ts";
 import {useNavigate} from "react-router";
 
-interface PreviewProps {
-    note: iNote,
-}
-
-export default function NotePreview({note}:PreviewProps) {
+export default function NotePreview({note}:{note: iNote}) {
     const [toggleHover, setToggleHover] = useState({cursor: 'default', boxShadow: 'none'});
     const navigate = useNavigate();
     function toggleCursorPointer(cursorStyle: string, borderStyle: string) {
