@@ -1,5 +1,3 @@
-// import {useAppSelector} from "../hooks/redux-hooks.ts";
-// import {RootState} from "../state/store.ts";
 import {iNote} from "../interfaces/iNote.ts";
 import NotePreview from "./NotePreview.tsx";
 import {Header} from "./Header.tsx";
@@ -7,7 +5,6 @@ import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api";
 
 export default function NoteList() {
-    // const notes = useAppSelector((state: RootState) => state.notes.noteList);
     const {isLoading, data: notes} = useGetNotesQuery();
     const navigate = useNavigate();
 
