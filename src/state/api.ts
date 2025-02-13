@@ -31,25 +31,20 @@ export const noteApi = createApi({
                 body: note,
                 method: 'PATCH'
             }),
-            // invalidatesTags: (result, error, { id, title }) => [{ type: 'Notes', id, title }],
-            async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
-                const patchResult = dispatch(
-                    noteApi.util.updateQueryData('getNoteById', id!, (draft) => {
-                        Object.assign(draft, patch)
-                    }),
-                )
-                try {
-                    await queryFulfilled
-                } catch {
-                    patchResult.undo()
-
-                    /**
-                     * Alternatively, on failure you can invalidate the corresponding cache tags
-                     * to trigger a re-fetch:
-                     * dispatch(api.util.invalidateTags(['Post']))
-                     */
-                }
-            },
+            invalidatesTags: (result, error, { id }) => [{ type: 'Notes', id }],
+            // async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+            //     const patchResult = dispatch(
+            //         noteApi.util.updateQueryData('getNotes', null, (draft) => {
+            //             Object.assign(draft, patch)
+            //         }),
+            //     )
+            //     try {
+            //         await queryFulfilled;
+            //         console.log(queryFulfilled)
+            //     } catch {
+            //         patchResult.undo()
+            //     }
+            // },
         }),
         deleteNote: builder.mutation({
             query: (id:number) => ({
