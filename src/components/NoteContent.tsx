@@ -43,12 +43,17 @@ export function NoteContent() {
             editNote(note);
         }
     }
+    function remove(id:number) {
+        setEditIcon(false);
+        deleteNote(id).then(_ => navigate('/'));
+    }
 
     return (
         <div style={{margin: '0 auto', width: '600px',}}>
             <Header style={{margin: '1rem 0', with: '100%', padding: '0.1rem'}} displayBackButton={true}>
                 {showEditIcon && <i className="bi bi-check-lg" role={"button"} onClick={() => save()}></i>}
-                <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}></i>
+                {note.id && <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}
+                    onClick={() => remove(note.id!)}></i>}
             </Header>
             <Card style={{width: '100%'}}>
                 <Card.Body>
