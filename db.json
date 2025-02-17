@@ -11,6 +11,60 @@
       "title": "Что бы посмотреть",
       "text": "Груз 200, Сербский фильм, Капитан Марвел",
       "dateCreate": "Thu Feb 13 2025 14:04:25 GMT+0400 (GMT+04:00)"
+    },
+    {
+      "title": "Подписка Яндекс",
+      "text": "Подписка Яндекс закончится 21 февраля",
+      "dateCreate": "Mon Feb 17 2025 13:11:06 GMT+0400 (GMT+04:00)",
+      "id": 3
+    },
+    {
+      "title": "Уборка",
+      "text": "Убраться дома",
+      "dateCreate": "Mon Feb 17 2025 13:12:10 GMT+0400 (GMT+04:00)",
+      "id": 4
+    },
+    {
+      "title": "Купить",
+      "text": "Молоко, творог, хлеб",
+      "dateCreate": "Mon Feb 17 2025 13:12:38 GMT+0400 (GMT+04:00)",
+      "id": 5
+    },
+    {
+      "title": "Распродажа Steam",
+      "text": "Borderlands, Abiotic Factory",
+      "dateCreate": "Mon Feb 17 2025 13:13:12 GMT+0400 (GMT+04:00)",
+      "id": 6
+    },
+    {
+      "title": "Во что бы поиграть",
+      "text": "Unreal Life, Fran Bow, Deus Ex, Red Dead Redemption 2",
+      "dateCreate": "Mon Feb 17 2025 13:14:11 GMT+0400 (GMT+04:00)",
+      "id": 7
+    },
+    {
+      "title": "Подключить интернет",
+      "text": "100 Мбит/с",
+      "dateCreate": "Mon Feb 17 2025 13:15:07 GMT+0400 (GMT+04:00)",
+      "id": 8
+    },
+    {
+      "title": "React",
+      "text": "Пагинация, OAuth-авторизация",
+      "dateCreate": "Mon Feb 17 2025 13:15:49 GMT+0400 (GMT+04:00)",
+      "id": 9
+    },
+    {
+      "title": "MegaFon",
+      "text": "18-го будет оплата",
+      "dateCreate": "Mon Feb 17 2025 13:17:13 GMT+0400 (GMT+04:00)",
+      "id": 10
+    },
+    {
+      "title": "Политика",
+      "text": "Встреча Трампа с Путиным 18-го февраля в Саудовской Аравии",
+      "dateCreate": "Mon Feb 17 2025 13:17:57 GMT+0400 (GMT+04:00)",
+      "id": 11
     }
   ]
 }
