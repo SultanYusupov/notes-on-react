@@ -7,11 +7,18 @@ export const noteApi = createApi({
     tagTypes: ['Notes'],
     baseQuery: fetchBaseQuery({ baseUrl: API_URL}),
     endpoints: (builder) => ({
-        getNotes: builder.query<iNote[], void>({
-            query: () => '/',
+        getNotes: builder.query<{notes: iNote[], totalCount: number}, number>({
+            query: (page) => '/?_page=1&_per_page='+page,
             providesTags: result =>
-                result ? [...result.map(({id}) => ({type: 'Notes', id} as const)), { type: 'Notes', id: 'LIST' }]
-                    : [{type: 'Notes', id: 'LIST'}]
+                result ? [...result.notes.map(({id}) => ({type: 'Notes', id} as const)), { type: 'Notes', id: 'LIST' }]
+                    : [{type: 'Notes', id: 'LIST'}],
+            transformResponse: (response: iNote[], meta: any) => {
+                const totalCount = meta?.response?.headers.get('X-Total-Count');
+                return {
+                    notes: response ? response : [],
+                    totalCount: totalCount ? parseInt(totalCount, 10) : 1,
+                };
+            },
         }),
         getNoteById: builder.query<iNote, number>({
             query: (id) => `/${id}`,
