@@ -49,7 +49,7 @@ export function NoteContent() {
     }
 
     return (
-        <div style={{margin: '0 auto', width: '600px',}}>
+        <div style={{margin: '0 auto', width: '600px'}}>
             <Header style={{margin: '1rem 0', with: '100%', padding: '0.1rem'}} displayBackButton={true}>
                 {showEditIcon && <i className="bi bi-check-lg" role={"button"} onClick={() => save()}></i>}
                 {note.id && <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}
@@ -57,7 +57,7 @@ export function NoteContent() {
             </Header>
             <Card style={{width: '100%'}}>
                 <Card.Body>
-                    <Card.Title className={'border-bottom pb-2'}><Form.Control className={'border-0'} type={"text"}
+                    <Card.Title className={`border-bottom pb-2`}><Form.Control className={'border-0'} type={"text"}
                                                                                value={note.title}
                                                                                onChange={(e) => setNote({
                                                                                    ...note,
