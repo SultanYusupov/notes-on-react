@@ -8,7 +8,7 @@ export const noteApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: API_URL}),
     endpoints: (builder) => ({
         getNotes: builder.query<{notes: iNote[], totalCount: number}, number>({
-            query: (page) => '/?_page=1&_per_page='+page,
+            query: (page) => `/?_page=${page}&_per_page=10`,
             providesTags: result =>
                 result ? [...result.notes.map(({id}) => ({type: 'Notes', id} as const)), { type: 'Notes', id: 'LIST' }]
                     : [{type: 'Notes', id: 'LIST'}],

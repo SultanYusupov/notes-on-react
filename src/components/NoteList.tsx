@@ -7,16 +7,17 @@ import {useState} from "react";
 import {Pagination} from "react-bootstrap";
 
 export default function NoteList() {
-    const [page, setPage] = useState(15);
+    const [page, setPage] = useState(1);
     const {isLoading, data} = useGetNotesQuery(page);
     const notes = data?.notes;
     const totalCount = data?.totalCount;
     const navigate = useNavigate();
-    function fillPaginationItems(page:number) {
-        let items = [];
-        for (let number = 1; number <= 5; number++) {
+    function fillPaginationItems(page:number, totalCount:number) {
+        const items = [];
+        const total:number = Math.ceil(totalCount / 10);
+        for (let number = 1; number <= total; number++) {
             items.push(
-                <Pagination.Item key={number} active={number === page}>
+                <Pagination.Item key={number} active={number === page} onClick={() => setPage(number)}>
                     {number}
                 </Pagination.Item>,
             );
@@ -45,7 +46,7 @@ export default function NoteList() {
                     )}
                 </div>
                 <div className={'ms-1 mt-4'}>
-                    <Pagination>{fillPaginationItems(page)}</Pagination>
+                    <Pagination>{fillPaginationItems(page, totalCount!)}</Pagination>
                 </div>
             </div>
         )
