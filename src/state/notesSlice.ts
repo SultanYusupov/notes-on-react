@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from './store'
 import {iNote} from "../interfaces/iNote.ts";
 
 export interface NotesState {
