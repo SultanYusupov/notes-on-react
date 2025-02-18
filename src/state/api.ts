@@ -20,8 +20,8 @@ export const noteApi = createApi({
                 };
             },
         }),
-        getNoteById: builder.query<iNote, number>({
-            query: (id) => `/${id}`,
+        getNoteById: builder.query<iNote|null, number>({
+            query: (id) => isNaN(id) ? '' : `/${id}`,
             providesTags: (result, error, id) => [{ type: 'Notes', id }],
         }),
         createNote: builder.mutation<iNote, iNote>({
