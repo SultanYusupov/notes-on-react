@@ -22,7 +22,7 @@ export const noteApi = createApi({
         }),
         getNoteById: builder.query<iNote|null, number>({
             query: (id) => isNaN(id) ? '' : `/${id}`,
-            providesTags: (result, error, id) => [{ type: 'Notes', id }],
+            providesTags: (result, error, id) => [{ type: 'Notes', id, res: result, err: error }],
         }),
         createNote: builder.mutation<iNote, iNote>({
             query: (note:iNote) => ({
@@ -38,14 +38,14 @@ export const noteApi = createApi({
                 body: note,
                 method: 'PATCH'
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Notes', id }],
+            invalidatesTags: (result, error, { id }) => [{ type: 'Notes', id, res: result, err: error }],
         }),
         deleteNote: builder.mutation({
             query: (id:number) => ({
                 url: API_URL+'/'+id,
                 method: 'DELETE'
             }),
-            invalidatesTags: (result, error, id) => [{ type: 'Notes', id }],
+            invalidatesTags: (result, error, id) => [{ type: 'Notes', id, res: result, err: error }],
         })
     }),
 })
