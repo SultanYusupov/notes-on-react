@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {iNote} from "../interfaces/iNote.ts";
 import {Header} from "./Header.tsx";
-import {useCreateNoteMutation, useDeleteNoteMutation, useEditNoteMutation, useGetNoteByIdQuery} from "../state/api.ts";
+import {useCreateNoteMutation, useDeleteNoteMutation, useEditNoteMutation, useGetNoteByIdQuery} from "../state/api/api.ts";
 
 export function NoteContent() {
     const {id} = useParams<string>();

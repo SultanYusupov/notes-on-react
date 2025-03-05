@@ -2,7 +2,7 @@ import {CloseButton, Toast} from "react-bootstrap";
 import {useState} from "react";
 import {iNote} from "../interfaces/iNote.ts";
 import {useNavigate} from "react-router";
-import {useDeleteNoteMutation} from "../state/api.ts";
+import {useDeleteNoteMutation} from "../state/api/api.ts";
 
 export default function NotePreview({note}:{note: iNote}) {
     const [toggleHover, setToggleHover] = useState({cursor: 'default', boxShadow: 'none'});

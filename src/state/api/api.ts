@@ -1,11 +1,11 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {iNote} from "../interfaces/iNote.ts";
+import {iNote} from "../../interfaces/iNote.ts";
 
 const API_URL = 'http://localhost:3001/note-list';
 export const noteApi = createApi({
     reducerPath: 'noteApi',
     tagTypes: ['Notes'],
-    baseQuery: fetchBaseQuery({ baseUrl: API_URL}),
+    baseQuery: fetchBaseQuery({ baseUrl: API_URL}), // TODO здесь есть headers
     endpoints: (builder) => ({
         getNotes: builder.query<{notes: iNote[], totalCount: number}, number>({
             query: (page) => `/?_page=${page}&_per_page=10`,

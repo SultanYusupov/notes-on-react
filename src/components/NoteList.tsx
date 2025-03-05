@@ -2,7 +2,7 @@ import {iNote} from "../interfaces/iNote.ts";
 import NotePreview from "./NotePreview.tsx";
 import {Header} from "./Header.tsx";
 import {useNavigate} from "react-router";
-import {useGetNotesQuery} from "../state/api";
+import {useGetNotesQuery} from "../state/api/api.ts";
 import {useState} from "react";
 import {Pagination} from "react-bootstrap";
 
