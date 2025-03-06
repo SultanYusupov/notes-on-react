@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 // import notesReducer from './notesSlice'
-import {noteApi} from './api/api.ts'
+import {api} from './api/api'
 
 export const store = configureStore({
     reducer: {
         // notes: notesReducer,
-        [noteApi.reducerPath]: noteApi.reducer,
+        [api.reducerPath]: api.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(noteApi.middleware),
+        getDefaultMiddleware().concat(api.middleware),
 })
 
 // Infer the `RootState`,  `AppDispatch`, and `AppStore` types from the store itself
