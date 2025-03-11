@@ -4,7 +4,7 @@ import {iNote} from "../../interfaces/iNote.ts";
 export const noteApi = api.injectEndpoints({
    endpoints: (builder) => ({
     getNotes: builder.query<{notes: iNote[], totalCount: number}, number>({
-        query: (page) => `/?_page=${page}&_per_page=10`,
+        query: (page) => `/note-list?_page=${page}&_per_page=10`,
         providesTags: result =>
             result ? [...result.notes.map(({id}) => ({type: 'Notes', id} as const)), { type: 'Notes', id: 'LIST' }]
                 : [{type: 'Notes', id: 'LIST'}],
@@ -17,12 +17,12 @@ export const noteApi = api.injectEndpoints({
         },
     }),
     getNoteById: builder.query<iNote|null, number>({
-        query: (id) => isNaN(id) ? '' : `/${id}`,
+        query: (id) => isNaN(id) ? '/note-list' : `/note-list/${id}`,
         providesTags: (result, error, id) => [{ type: 'Notes', id, res: result, err: error }],
     }),
     createNote: builder.mutation<iNote, iNote>({
         query: (note:iNote) => ({
-            url: '',
+            url: '/note-list',
             body: note,
             method: 'POST'
         }),
@@ -30,7 +30,7 @@ export const noteApi = api.injectEndpoints({
     }),
     editNote: builder.mutation<number, iNote>({
         query: ({id, ...note}) => ({
-            url: '/'+id,
+            url: '/note-list/'+id,
             body: note,
             method: 'PATCH'
         }),
@@ -38,7 +38,7 @@ export const noteApi = api.injectEndpoints({
     }),
     deleteNote: builder.mutation({
         query: (id:number) => ({
-            url: '/'+id,
+            url: '/note-list/'+id,
             method: 'DELETE'
         }),
         invalidatesTags: (result, error, id) => [{ type: 'Notes', id, res: result, err: error }],
