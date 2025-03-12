@@ -1,15 +1,24 @@
 import {Button, Card, Form} from "react-bootstrap";
 import React, {useState} from "react";
 import {useLogin} from "../hooks/useLogin.ts";
+import {useAppDispatch} from "../hooks/redux-hooks.ts";
+import {setAuth, setUser} from "../state/userSlice.ts";
+import {useNavigate} from "react-router";
 
 export function Login() {
     const [email, setEmail] = useState<string>('sultansuzran@gmail.com');
     const [password, setPassword] = useState<string>('12345');
     const login = useLogin();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     async function loginToAccount(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         try {
             const result = await login(email, password);
+            localStorage.setItem('token', result!.accessToken);
+            dispatch(setAuth(true));
+            dispatch(setUser(result!.user));
+            navigate('/');
         } catch (error) {
             console.error(error);
         }
