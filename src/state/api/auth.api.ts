@@ -10,10 +10,11 @@ export const authApi = api.injectEndpoints({
                 method: 'POST',
                 credentials: 'include'
             }),
-            transformResponse: (response: { data: AuthResponse }) => {
-                localStorage.setItem('token', response.data.accessToken);
-                return response.data
-            }
+            transformResponse: (response: AuthResponse) => {
+                console.log(response);
+                return response;
+            },
+            invalidatesTags: [{ type: 'Auth' }]
         }),
         registration: builder.mutation<AuthResponse, {email: string, password: string}>({
             query: (data) => ({
