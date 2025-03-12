@@ -2,16 +2,17 @@ import {iNote} from "../interfaces/iNote.ts";
 import NotePreview from "./NotePreview.tsx";
 import {Header} from "./Header.tsx";
 import {useNavigate} from "react-router";
-import {useCheckAuthQuery} from "../state/api/auth.api.ts";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
 import {useState} from "react";
 import {Pagination} from "react-bootstrap";
+import {useAppSelector} from "../hooks/redux-hooks.ts";
 import {skipToken} from "@reduxjs/toolkit/query";
 
 export default function NoteList() {
     const [page, setPage] = useState(1);
-    const {data: authData} = useCheckAuthQuery();
-    const {isLoading, data: notesData} = useGetNotesQuery(authData?.user.isActivated ? page : skipToken);
+    const authState = useAppSelector((state) => state.user.isAuth);
+    console.log(authState);
+    const {isLoading, data: notesData} = useGetNotesQuery(authState ? page : skipToken); // checkAuthData?.user.isActivated ? page : skipToken
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ export default function NoteList() {
         return items;
     }
 
-    if (!authData?.accessToken) {
+    if (!localStorage.getItem('accessToken')) {
         navigate('/login');
     }
 
