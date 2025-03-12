@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 // import notesReducer from './notesSlice'
+import userReducer from './userSlice';
 import {api} from './api/api'
 
 export const store = configureStore({
     reducer: {
         // notes: notesReducer,
         [api.reducerPath]: api.reducer,
+        user: userReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(api.middleware),
