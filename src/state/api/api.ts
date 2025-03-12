@@ -7,4 +7,3 @@ export const api = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: API_URL}), // TODO здесь есть headers: {Authorization: `Bearer ${token}`}
     endpoints: () => ({}),
 })
-
