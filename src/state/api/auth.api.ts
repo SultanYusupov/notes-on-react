@@ -7,7 +7,8 @@ export const authApi = api.injectEndpoints({
             query: (data) => ({
                 url: '/login',
                 body: data,
-                method: 'POST'
+                method: 'POST',
+                credentials: 'include'
             }),
             transformResponse: (response: { data: AuthResponse }) => {
                 localStorage.setItem('token', response.data.accessToken);
@@ -18,7 +19,8 @@ export const authApi = api.injectEndpoints({
             query: (data) => ({
                 url: '/registration',
                 body: data,
-                method: 'POST'
+                method: 'POST',
+                credentials: 'include'
             }),
             transformResponse: (response: { data: AuthResponse }) => {
                 localStorage.setItem('token', response.data.accessToken);
@@ -26,13 +28,13 @@ export const authApi = api.injectEndpoints({
             }
         }),
         logout: builder.mutation<void, void>({
-            query: (data) => ({
+            query: () => ({
                 url: '/logout',
-                body: data,
-                method: 'POST'
+                method: 'POST',
+                credentials: 'include'
             })
         }),
-        checkAuth: builder.query<AuthResponse, void>({
+        refresh: builder.query<AuthResponse, void>({
             query: () => '/refresh',
             transformResponse: (result:AuthResponse) => {
                 console.log(result);
@@ -43,4 +45,4 @@ export const authApi = api.injectEndpoints({
     })
 })
 
-export const {useLoginMutation, useRegistrationMutation, useLogoutMutation, useCheckAuthQuery} = authApi;
+export const {useLoginMutation, useRegistrationMutation, useLogoutMutation, useRefreshQuery} = authApi;
