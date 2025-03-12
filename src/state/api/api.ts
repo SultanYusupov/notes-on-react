@@ -1,10 +1,46 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {AuthResponse} from "../../interfaces/AuthResponse.ts";
 
 const API_URL = 'http://localhost:5000/api';
-const token = localStorage.getItem('token');
+// const token = localStorage.getItem('token');
+
+const baseQuery = fetchBaseQuery({
+    baseUrl: API_URL,
+    prepareHeaders: (headers) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            headers.set('Authorization', `Bearer ${token}`);
+        }
+        return headers;
+    }
+});
+
+// Я не знаю как это работает
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+    let result = await baseQuery(args, api, extraOptions);
+
+    if (result.error && result.error.status === 401) {
+        // Попытка обновить токен
+        const refreshResult = await baseQuery({ url: '/refresh', method: 'GET' }, api, extraOptions);
+
+        if (refreshResult.data) {
+            // Сохраняем новый токен в localStorage
+            localStorage.setItem('token', (refreshResult.data as AuthResponse).accessToken);
+            // Повторяем оригинальный запрос с новым токеном
+            result = await baseQuery(args, api, extraOptions);
+        } else {
+            // Если обновление токена не удалось, перенаправляем на страницу авторизации
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+        }
+    }
+
+    return result;
+};
+
 export const api = createApi({
     reducerPath: 'api',
     tagTypes: ['Notes', 'Auth'],
-    baseQuery: fetchBaseQuery({ baseUrl: API_URL, headers: {Authorization: `Bearer ${token}`}}),
+    baseQuery: baseQueryWithReauth,
     endpoints: () => ({}),
 })
