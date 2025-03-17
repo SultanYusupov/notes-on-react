@@ -29,14 +29,14 @@ export default function NoteList() {
         return items;
     }
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            dispatch((setAuth(true)))
-        }
-        else {
-            navigate('/login');
-        }
-    }, [dispatch, navigate])
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //         dispatch((setAuth(true)))
+    //     }
+    //     else {
+    //         navigate('/login');
+    //     }
+    // }, [dispatch, navigate])
 
     if (isLoading) {
         return <h4>Loading...</h4>
