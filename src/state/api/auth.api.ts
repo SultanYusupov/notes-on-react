@@ -33,22 +33,27 @@ export const authApi = api.injectEndpoints({
                 credentials: 'include'
             })
         }),
-        refresh: builder.query<AuthResponse, void>({
-            query: () => '/refresh',
-            onQueryStarted:  async (_credentials, { dispatch, queryFulfilled  }) => {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(setAuth(true));
-                    dispatch(setUser(data.user));
-                    localStorage.setItem('token', data.accessToken);
-                }
-                catch (e) {
-                    console.log(e);
-                }
-            },
-            transformResponse: (result:AuthResponse) => result,
-        })
+        // refresh: builder.query<AuthResponse, void>({
+        //     query: () => '/refresh',
+        //     onQueryStarted:  async (_credentials, { dispatch, queryFulfilled  }) => {
+        //         try {
+        //             const { data } = await queryFulfilled;
+        //             dispatch(setAuth(true));
+        //             dispatch(setUser(data.user));
+        //             console.log('dsgthjfjyyyyyyyyy')
+        //             localStorage.setItem('token', data.accessToken);
+        //         }
+        //         catch (e) {
+        //             if (e.error && e.error.status == 401) {
+        //                 console.log('dsgthjfjyyyyyyyyy');
+        //                 localStorage.removeItem('token');
+        //                 // window.location.href = '/login';
+        //             }
+        //         }
+        //     },
+        //     transformResponse: (result:AuthResponse) => result,
+        // })
     })
 })
 
-export const {useLoginMutation, useRegistrationMutation, useLogoutMutation, useRefreshQuery} = authApi;
+export const {useLoginMutation, useRegistrationMutation, useLogoutMutation} = authApi;
