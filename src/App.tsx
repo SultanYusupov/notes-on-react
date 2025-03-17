@@ -6,19 +6,19 @@ import {Form} from "react-bootstrap";
 import {Login} from "./components/Login.tsx";
 import {Register} from "./components/Register.tsx";
 import {useEffect} from "react";
-import {setAuth} from "./state/userSlice.ts";
 import {useAppDispatch, useAppSelector} from "./hooks/redux-hooks.ts";
 import {Account} from "./components/Account.tsx";
 
 function App() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const authState = useAppSelector((state) => state.user.isAuth);
-    useEffect(() => {
-        // if (!localStorage.getItem('token')) {
-        //     navigate('/login');
-        // }
-    }, [dispatch, navigate])
+    // const {data: refreshData, isError: isTokenError} = useRefreshQuery();
+    // useEffect(() => {
+    //     if (localStorage.getItem('token')) {
+    //         dispatch(setUser(refreshData!.user));
+    //         dispatch(setAuth(true));
+    //     }
+    // }, [dispatch, refreshData])
     function changeTheme() {
         const htmlElement = document.documentElement;
         if (htmlElement.dataset.bsTheme === 'dark') {

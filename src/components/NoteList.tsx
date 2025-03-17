@@ -12,7 +12,8 @@ export default function NoteList() {
     const [page, setPage] = useState(1);
     const authState = useAppSelector((state) => state.user.isAuth);
     const dispatch = useAppDispatch();
-    const {isLoading, data: notesData} = useGetNotesQuery(page); // checkAuthData?.user.isActivated ? page : skipToken
+    const {isLoading, data: notesData, isError} = useGetNotesQuery(page); // checkAuthData?.user.isActivated ? page : skipToken
+    // const {data: refreshData, isError: isTokenError} = useRefreshQuery();
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
     const navigate = useNavigate();
@@ -30,13 +31,10 @@ export default function NoteList() {
     }
 
     // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         dispatch((setAuth(true)))
+    //     if (isError) {
+    //         console.log(isError, refreshData, isTokenError)
     //     }
-    //     else {
-    //         navigate('/login');
-    //     }
-    // }, [dispatch, navigate])
+    // }, [isError, isTokenError, refreshData])
 
     if (isLoading) {
         return <h4>Loading...</h4>
