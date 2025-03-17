@@ -12,21 +12,24 @@ const baseQuery = fetchBaseQuery({
             headers.set('Authorization', `Bearer ${token}`);
         }
         return headers;
-    }
+    },
 });
 
 // Я не знаю как это работает
-const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: object) => {
+const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: { dispatch?: any }) => {
     let result = await baseQuery(args, api, extraOptions);
-
     if (result.error && result.error.status === 401) {
         // Попытка обновить токен
         const refreshResult = await baseQuery({ url: '/refresh', method: 'GET', credentials: "include" }, api, extraOptions);
-        if (refreshResult.data) {
+        if (refreshResult?.data) {
             // Сохраняем новый токен в localStorage
             localStorage.setItem('token', (refreshResult.data as AuthResponse).accessToken);
-            setAuth(true);
-            setUser((refreshResult.data as AuthResponse).user);
+            // Обновляем состояние авторизации и пользователя
+            if (extraOptions?.dispatch) {
+                console.log(refreshResult.data);
+                extraOptions.dispatch(setAuth(true));
+                extraOptions.dispatch(setUser((refreshResult.data as AuthResponse).user)); // Предположим, что данные пользователя возвращаются вместе с токеном
+            }
             // Повторяем оригинальный запрос с новым токеном
             result = await baseQuery(args, api, extraOptions);
         } else {
