@@ -17,16 +17,18 @@ function App() {
         }
     }
   return(
-      <div>
-          <Form>
-              <Form.Check
-                  type="switch"
-                  id="custom-switch"
-                  label="Theme"
-                  onClick={() => changeTheme()}
-              />
-          </Form>
-          <Account />
+      <div style={{margin: '1rem'}}>
+          <header style={{display: 'flex', justifyContent: 'space-between'}}>
+              <Form>
+                  <Form.Check
+                      type="switch"
+                      id="custom-switch"
+                      label="Theme"
+                      onClick={() => changeTheme()}
+                  />
+              </Form>
+              <Account />
+          </header>
           <Routes>
             <Route path={'/'} element={<NoteList />}></Route>
             <Route path={'/login'} element={<Login />}></Route>

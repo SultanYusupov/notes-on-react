@@ -30,7 +30,7 @@ export default function NoteList() {
     }
     if (notes) {
         return (
-            <div style={{margin: '1rem'}}>
+            <div>
                 <Header style={{width: '25%', marginBottom: '1rem'}} displayBackButton={false}>
                     <i className="bi bi-plus-square" role={"button"} onClick={() => navigate('/new')}></i>
                     <i className="bi bi-search" style={{paddingLeft: '1rem'}} role={"button"}></i>

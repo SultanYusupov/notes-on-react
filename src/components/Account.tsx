@@ -1,4 +1,5 @@
 import {useAppSelector} from "../hooks/redux-hooks.ts";
+import {Button} from "react-bootstrap";
 
 export function Account() {
     const authState = useAppSelector((state) => state.user.isAuth);
@@ -6,7 +7,10 @@ export function Account() {
 
     if (authState) {
         return(
-            <div>Hello, {userData.email}</div>
+            <div style={{display: 'flex', alignItems: 'baseline'}}>
+                <p>Hello, {userData.email}</p>
+                <Button variant="secondary" style={{marginLeft: '10px'}}>Exit</Button>
+            </div>
         )
     }
     else {
