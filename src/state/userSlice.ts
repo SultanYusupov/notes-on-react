@@ -24,8 +24,8 @@ export const userSlice = createSlice({
         setLoading: (state:UserState, action:PayloadAction<boolean>) => {
             return {...state, isLoading: action.payload}
         },
-        logout: () => initialState
+        logOut: () => initialState
     }
 });
-export const {setLoading, setAuth, setUser, logout} = userSlice.actions;
+export const {setLoading, setAuth, setUser, logOut} = userSlice.actions;
 export default userSlice.reducer;
