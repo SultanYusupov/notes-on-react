@@ -20,10 +20,7 @@ export const authApi = api.injectEndpoints({
                 method: 'POST',
                 credentials: 'include'
             }),
-            transformResponse: (response: { data: AuthResponse }) => {
-                localStorage.setItem('token', response.data.accessToken);
-                return response.data
-            }
+            invalidatesTags: (result, error) => [{ type: 'Auth', res: result, err: error }]
         }),
         logout: builder.mutation<void, void>({
             query: () => ({

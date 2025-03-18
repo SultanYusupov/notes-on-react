@@ -30,12 +30,12 @@ export function Login() {
                 <Form onSubmit={(event) => loginToAccount(event)}>
                     <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label column={'lg'}>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" autoComplete={'true'} value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <Form.Control type="email" placeholder="Enter email" autoComplete={'true'} value={email} onChange={(e) => setEmail(e.target.value)} required />
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formPassword">
                         <Form.Label column={'lg'}>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" autoComplete={'false'} value={password} onChange={(e) => setPassword(e.target.value)} />
+                        <Form.Control type="password" placeholder="Password" autoComplete={'false'} value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </Form.Group>
                     <Button variant="primary" type="submit">
                         Войти
