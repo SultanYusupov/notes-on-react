@@ -3,17 +3,12 @@ import NotePreview from "./NotePreview.tsx";
 import {Header} from "./Header.tsx";
 import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Pagination} from "react-bootstrap";
-import {useAppDispatch, useAppSelector} from "../hooks/redux-hooks.ts";
-import {setAuth} from "../state/userSlice.ts";
 
 export default function NoteList() {
     const [page, setPage] = useState(1);
-    const authState = useAppSelector((state) => state.user.isAuth);
-    const dispatch = useAppDispatch();
-    const {isLoading, data: notesData, isError} = useGetNotesQuery(page); // checkAuthData?.user.isActivated ? page : skipToken
-    // const {data: refreshData, isError: isTokenError} = useRefreshQuery();
+    const {isLoading, data: notesData} = useGetNotesQuery(page);
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
     const navigate = useNavigate();
@@ -29,12 +24,6 @@ export default function NoteList() {
         }
         return items;
     }
-
-    // useEffect(() => {
-    //     if (isError) {
-    //         console.log(isError, refreshData, isTokenError)
-    //     }
-    // }, [isError, isTokenError, refreshData])
 
     if (isLoading) {
         return <h4>Loading...</h4>

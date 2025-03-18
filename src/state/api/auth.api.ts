@@ -1,6 +1,5 @@
 import {api} from "./api.ts";
 import {AuthResponse} from "../../interfaces/AuthResponse.ts";
-import {setAuth, setUser} from "../userSlice.ts";
 
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -32,27 +31,7 @@ export const authApi = api.injectEndpoints({
                 method: 'POST',
                 credentials: 'include'
             })
-        }),
-        // refresh: builder.query<AuthResponse, void>({
-        //     query: () => '/refresh',
-        //     onQueryStarted:  async (_credentials, { dispatch, queryFulfilled  }) => {
-        //         try {
-        //             const { data } = await queryFulfilled;
-        //             dispatch(setAuth(true));
-        //             dispatch(setUser(data.user));
-        //             console.log('dsgthjfjyyyyyyyyy')
-        //             localStorage.setItem('token', data.accessToken);
-        //         }
-        //         catch (e) {
-        //             if (e.error && e.error.status == 401) {
-        //                 console.log('dsgthjfjyyyyyyyyy');
-        //                 localStorage.removeItem('token');
-        //                 // window.location.href = '/login';
-        //             }
-        //         }
-        //     },
-        //     transformResponse: (result:AuthResponse) => result,
-        // })
+        })
     })
 })
 

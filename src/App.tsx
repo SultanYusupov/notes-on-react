@@ -1,24 +1,13 @@
 import './App.scss'
-import {Route, Routes, useNavigate} from "react-router";
+import {Route, Routes} from "react-router";
 import NoteList from "./components/NoteList.tsx";
 import {NoteContent} from "./components/NoteContent.tsx";
 import {Form} from "react-bootstrap";
 import {Login} from "./components/Login.tsx";
 import {Register} from "./components/Register.tsx";
-import {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "./hooks/redux-hooks.ts";
 import {Account} from "./components/Account.tsx";
 
 function App() {
-    const dispatch = useAppDispatch();
-    const navigate = useNavigate();
-    // const {data: refreshData, isError: isTokenError} = useRefreshQuery();
-    // useEffect(() => {
-    //     if (localStorage.getItem('token')) {
-    //         dispatch(setUser(refreshData!.user));
-    //         dispatch(setAuth(true));
-    //     }
-    // }, [dispatch, refreshData])
     function changeTheme() {
         const htmlElement = document.documentElement;
         if (htmlElement.dataset.bsTheme === 'dark') {
