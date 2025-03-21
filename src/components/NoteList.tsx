@@ -3,12 +3,12 @@ import NotePreview from "./NotePreview.tsx";
 import {Header} from "./Header.tsx";
 import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
-import {useState} from "react";
-import {Pagination} from "react-bootstrap";
+import React, {useState} from "react";
+import {Alert, Pagination} from "react-bootstrap";
 
 export default function NoteList() {
     const [page, setPage] = useState(1);
-    const {isLoading, data: notesData} = useGetNotesQuery(page);
+    const {isLoading, data: notesData, isError} = useGetNotesQuery(page);
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
     const navigate = useNavigate();
@@ -27,6 +27,9 @@ export default function NoteList() {
 
     if (isLoading) {
         return <h4>Loading...</h4>
+    }
+    if (isError) {
+        return <Alert key={'danger'} variant={'danger'}>Ошибка соединения с сервером</Alert>
     }
     if (notes) {
         return (
