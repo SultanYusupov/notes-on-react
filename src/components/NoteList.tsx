@@ -3,7 +3,7 @@ import NotePreview from "./NotePreview.tsx";
 import {Header} from "./Header.tsx";
 import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
-import React, {useState} from "react";
+import {useState} from "react";
 import {Alert, Pagination} from "react-bootstrap";
 
 export default function NoteList() {
