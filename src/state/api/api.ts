@@ -15,7 +15,6 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
-// Я не знаю как это работает
 const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: object) => {
     let result = await baseQuery(args, api, extraOptions);
     if (result.error && result.error.status === 401) {
