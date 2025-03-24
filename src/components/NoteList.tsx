@@ -4,17 +4,16 @@ import {Header} from "./Header.tsx";
 import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
 import {useState} from "react";
-import {Alert, Form, Pagination} from "react-bootstrap";
+import {Alert, Button, Form, Pagination} from "react-bootstrap";
 
 export default function NoteList() {
     const [page, setPage] = useState(1);
-    // const searchText = useRef<HTMLInputElement | null>(null);
     const [filterText, setFilterText] = useState('');
     const {isLoading, data: notesData, isError} = useGetNotesQuery({page, filterText});
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
     const navigate = useNavigate();
-    const [searchMode, setSearchMode] = useState<boolean>(true);
+    const [searchMode, setSearchMode] = useState<boolean>(false);
     let timerId: ReturnType<typeof setTimeout> | undefined;
     function fillPaginationItems(page:number, totalCount:number) {
         const items = [];
@@ -35,6 +34,10 @@ export default function NoteList() {
             setFilterText(filterValue.trim());
         }, 1500);
     }
+    function resetFilter() {
+        setFilterText('');
+        setSearchMode(false);
+    }
 
     if (isLoading) {
         return <h4>Loading...</h4>
@@ -45,10 +48,14 @@ export default function NoteList() {
     if (notes) {
         return (
             <div>
-                <Header style={{width: '25%', marginBottom: '1rem'}} displayBackButton={false}>
+                <Header style={{width: '35%', marginBottom: '1rem'}} displayBackButton={false}>
                     {!searchMode && <i className="bi bi-plus-square" role={"button"} onClick={() => navigate('/new')}></i>}
                     {!searchMode && <i className="bi bi-search" style={{paddingLeft: '1rem'}} role={"button"} onClick={() => setSearchMode(true)}></i>}
-                    {searchMode && <Form><Form.Control size="sm" type="text" maxLength={12} onChange={(e) => searchNote(e.target.value)}></Form.Control></Form>}
+                    {searchMode && <div style={{display: 'flex', width: '320px', justifyContent: 'space-between'}}>
+                        <Form><Form.Control size="sm" type="text" maxLength={12} onChange={(e) => searchNote(e.target.value)}
+                                                            ></Form.Control></Form>
+                        <Button variant="secondary" size={'sm'} onClick={resetFilter}>Отменить поиск</Button>
+                    </div>}
                 </Header>
                 <div
                     aria-live="polite"

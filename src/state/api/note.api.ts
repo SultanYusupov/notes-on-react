@@ -3,8 +3,8 @@ import {iNote} from "../../interfaces/iNote.ts";
 
 export const noteApi = api.injectEndpoints({
    endpoints: (builder) => ({
-    getNotes: builder.query<{notes: iNote[], totalCount: number}, {page: number, filterText?: string}>({
-        query: ({page, filterText:text = ''}) => `/note-list?_page=${page}&_per_page=10${text ? `&_filter=${text}` : ''}`,
+    getNotes: builder.query<{notes: iNote[], totalCount: number}, {page: number, filterText: string}>({
+        query: ({page, filterText:text}) => `/note-list?_page=${page}&_per_page=10${text ? `&_filter=${text}` : ''}`,
         providesTags: result =>
             result ? [...result.notes.map(({id}) => ({type: 'Notes', id} as const)), { type: 'Notes', id: 'LIST' }]
                 : [{type: 'Notes', id: 'LIST'}],
