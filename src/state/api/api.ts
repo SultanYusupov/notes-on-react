@@ -1,18 +1,18 @@
 import {BaseQueryApi, createApi, FetchArgs, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {AuthResponse} from "../../interfaces/AuthResponse.ts";
-import {setAuth, setUser} from "../userSlice.ts";
-
+import {logOut, setAuth, setUser} from "../userSlice.ts";
 const API_URL = 'http://localhost:5000/api';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: API_URL,
-    prepareHeaders: (headers) => {
+    prepareHeaders: async (headers) => {
         const token = localStorage.getItem('token');
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
         }
         return headers;
     },
+    credentials:"include"
 });
 
 const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: object) => {
@@ -30,9 +30,11 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
         } else {
             // Если обновление токена не удалось, перенаправляем на страницу авторизации
             localStorage.removeItem('token');
+            api.dispatch(logOut());
             window.location.href = '/login';
         }
     }
+
 
     return result;
 };

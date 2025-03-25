@@ -1,5 +1,7 @@
 import {api} from "./api.ts";
 import {AuthResponse} from "../../interfaces/AuthResponse.ts";
+import {logOut, setAuth, setUser} from "../userSlice.ts";
+import {iUser} from "../../interfaces/iUser.ts";
 
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -28,8 +30,22 @@ export const authApi = api.injectEndpoints({
                 method: 'POST',
                 credentials: 'include'
             })
+        }),
+        user: builder.query<iUser, void>({
+            query: () => '/user',
+            async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(setUser(data));
+                    dispatch(setAuth(true));
+                } catch (error) {
+                    dispatch(setAuth(false));
+                    dispatch(logOut());
+                    console.error('Ошибка запроса:', error);
+                }
+            },
         })
     })
 })
 
-export const {useLoginMutation, useRegistrationMutation, useLogoutMutation} = authApi;
+export const {useLoginMutation, useRegistrationMutation, useLogoutMutation, useUserQuery} = authApi;

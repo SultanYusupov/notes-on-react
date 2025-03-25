@@ -1,6 +1,6 @@
 import {useAppDispatch, useAppSelector} from "../hooks/redux-hooks.ts";
 import {Button} from "react-bootstrap";
-import {useLogoutMutation} from "../state/api/auth.api.ts";
+import {useLogoutMutation, useUserQuery} from "../state/api/auth.api.ts";
 import {logOut} from "../state/userSlice.ts";
 import {useNavigate} from "react-router";
 
@@ -10,13 +10,14 @@ export function Account() {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [logout] = useLogoutMutation();
+    const {data: profile} = useUserQuery();
     async function logoutAccount() {
         await logout();
         dispatch(logOut());
         localStorage.removeItem('token');
         navigate('/login');
     }
-    if (authState) {
+    if (profile && authState) {
         return(
             <div style={{display: 'flex', alignItems: 'baseline'}}>
                 <p>Hello, {userData.email}</p>
