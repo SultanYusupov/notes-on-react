@@ -6,8 +6,8 @@ import {setAuth, setUser} from "../state/userSlice.ts";
 import {useNavigate} from "react-router";
 
 export function Login() {
-    const [email, setEmail] = useState<string>('sultansuzran@gmail.com');
-    const [password, setPassword] = useState<string>('12345');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
     const login = useLogin();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

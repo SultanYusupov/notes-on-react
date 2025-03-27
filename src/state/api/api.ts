@@ -1,6 +1,6 @@
 import {BaseQueryApi, createApi, FetchArgs, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {AuthResponse} from "../../interfaces/AuthResponse.ts";
-import {logOut, setAuth, setUser} from "../userSlice.ts";
+import {logOut} from "../userSlice.ts";
 const API_URL = 'http://localhost:5000/api';
 
 const baseQuery = fetchBaseQuery({
@@ -11,20 +11,16 @@ const baseQuery = fetchBaseQuery({
             headers.set('Authorization', `Bearer ${token}`);
         }
         return headers;
-    },
-    credentials:"include"
+    }
 });
 
 const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, extraOptions: object) => {
     let result = await baseQuery(args, api, extraOptions);
-    if (result.error && result.error.status === 401) {
+    if (result.error && result.error.status === 401 && !(typeof args !== 'string' && args.url === '/refresh')) {
         // Попытка обновить токен
         const refreshResult = await baseQuery({ url: '/refresh', method: 'GET', credentials: "include" }, api, extraOptions);
         if (refreshResult?.data) {
-            // Сохраняем новый токен в localStorage
             localStorage.setItem('token', (refreshResult.data as AuthResponse).accessToken);
-            api.dispatch(setUser((refreshResult.data as AuthResponse).user));
-            api.dispatch(setAuth(true));
             // Повторяем оригинальный запрос с новым токеном
             result = await baseQuery(args, api, extraOptions);
         } else {
@@ -34,8 +30,6 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: BaseQueryApi, 
             window.location.href = '/login';
         }
     }
-
-
     return result;
 };
 

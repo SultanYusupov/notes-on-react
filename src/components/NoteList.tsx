@@ -5,13 +5,18 @@ import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
 import {useState} from "react";
 import {Alert, Button, Form, Pagination} from "react-bootstrap";
+import {useUserQuery} from "../state/api/auth.api.ts";
+import {skipToken} from "@reduxjs/toolkit/query";
 
 export default function NoteList() {
     const [page, setPage] = useState(1);
     const [filterText, setFilterText] = useState('');
-    const {isLoading, data: notesData, isError} = useGetNotesQuery({page, filterText});
+    const {data: profile} = useUserQuery();
+    const {isLoading, data: notesData, isError} = useGetNotesQuery(profile ? {page, filterText} : skipToken);
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
+    // const notes:iNote[] = [];
+    // const totalCount = 10;
     const navigate = useNavigate();
     const [searchMode, setSearchMode] = useState<boolean>(false);
     let timerId: ReturnType<typeof setTimeout> | undefined;

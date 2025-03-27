@@ -38,11 +38,7 @@ export const authApi = api.injectEndpoints({
                     const { data } = await queryFulfilled;
                     dispatch(setUser(data));
                     dispatch(setAuth(true));
-                } catch (error) {
-                    dispatch(setAuth(false));
-                    dispatch(logOut());
-                    console.error('Ошибка запроса:', error);
-                }
+                } catch (error) {}
             },
         })
     })
