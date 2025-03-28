@@ -1,6 +1,6 @@
 import {api} from "./api.ts";
 import {AuthResponse} from "../../interfaces/AuthResponse.ts";
-import {logOut, setAuth, setUser} from "../userSlice.ts";
+import {setAuth, setUser} from "../userSlice.ts";
 import {iUser} from "../../interfaces/iUser.ts";
 
 export const authApi = api.injectEndpoints({
@@ -34,11 +34,9 @@ export const authApi = api.injectEndpoints({
         user: builder.query<iUser, void>({
             query: () => '/user',
             async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-                try {
-                    const { data } = await queryFulfilled;
-                    dispatch(setUser(data));
-                    dispatch(setAuth(true));
-                } catch (error) {}
+                const { data } = await queryFulfilled;
+                dispatch(setUser(data));
+                dispatch(setAuth(true));
             },
         })
     })

@@ -15,8 +15,6 @@ export default function NoteList() {
     const {isLoading, data: notesData, isError} = useGetNotesQuery(profile ? {page, filterText} : skipToken);
     const notes = notesData?.notes;
     const totalCount = notesData?.totalCount;
-    // const notes:iNote[] = [];
-    // const totalCount = 10;
     const navigate = useNavigate();
     const [searchMode, setSearchMode] = useState<boolean>(false);
     let timerId: ReturnType<typeof setTimeout> | undefined;
