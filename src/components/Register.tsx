@@ -1,9 +1,11 @@
 import {Alert, Button, Card, Form} from "react-bootstrap";
 import React, {useState} from "react";
 import {useRegistrationMutation} from "../state/api/auth.api.ts";
+import {iError} from "../interfaces/iError.ts";
+import {AuthResponse} from "../interfaces/AuthResponse.ts";
 
 export function Register() {
-    const [email, setEmail] = useState<string>('yusupovsultan98@gmail.com');
+    const [email, setEmail] = useState<string>('sultansuzran@gmail.com');
     const [password, setPassword] = useState<string>('12345');
     const [confirmedPassword, setConfirmedPassword] = useState<string>('12345');
     const [isInvalid, setIsInvalid] = useState(false);
@@ -19,15 +21,17 @@ export function Register() {
     }
     async function registerAccount() {
         const result = await register({email, password});
-        if ('error' in result) {
-            setText(result.error?.data.message);
+
+        if ((result as iError) !== undefined) {
+            setText((result as iError).error.data.message);
             setDisplayError(true);
-            return;
         }
-        if (!result.data.user.isActivated) {
+
+        if (result.data !== undefined && (!(result as {data: AuthResponse}).data.user.isActivated)) {
             setDisplayWarning(true);
             setText('На вашу почту пришло письмо с подтверждением аккаунта');
         }
+
         setEmail('');
         setPassword('');
     }

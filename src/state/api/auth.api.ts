@@ -2,6 +2,7 @@ import {api} from "./api.ts";
 import {AuthResponse} from "../../interfaces/AuthResponse.ts";
 import {setAuth, setUser} from "../userSlice.ts";
 import {iUser} from "../../interfaces/iUser.ts";
+import {iError} from "../../interfaces/iError.ts";
 
 export const authApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -15,7 +16,7 @@ export const authApi = api.injectEndpoints({
             transformResponse: (response: AuthResponse) => response,
             invalidatesTags: [{ type: 'Auth' }]
         }),
-        registration: builder.mutation<AuthResponse, {email: string, password: string}>({
+        registration: builder.mutation<AuthResponse|iError, {email: string, password: string}>({
             query: (data) => ({
                 url: '/registration',
                 body: data,
