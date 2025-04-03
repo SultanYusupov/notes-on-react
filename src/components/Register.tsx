@@ -6,9 +6,9 @@ import {AuthResponse} from "../interfaces/AuthResponse.ts";
 import {useNavigate} from "react-router";
 
 export function Register() {
-    const [email, setEmail] = useState<string>('sultansuzran@gmail.com');
-    const [password, setPassword] = useState<string>('12345');
-    const [confirmedPassword, setConfirmedPassword] = useState<string>('12345');
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [confirmedPassword, setConfirmedPassword] = useState<string>('');
     const [isInvalid, setIsInvalid] = useState(false);
     const [displayError, setDisplayError] = useState(false);
     const [text, setText] = useState('');
@@ -32,8 +32,6 @@ export function Register() {
         if (!(result as {data: AuthResponse})?.data.user.isActivated) {
             setEmail('');
             setPassword('');
-            // setDisplayWarning(true);
-            // setText('На вашу почту пришло письмо с подтверждением аккаунта');
             navigate('/confirm', {state: {email: email}});
         }
     }
@@ -50,7 +48,7 @@ export function Register() {
    }
     return(
         <Card style={{width: '30%', margin: '50px auto'}}>
-            <Card.Header>Регистрация</Card.Header>
+            <Card.Header>Registration</Card.Header>
             <Card.Body>
                 <Form onSubmit={(event) => validateForm(event)}>
                     <Form.Group className="mb-3" controlId="formEmail">
@@ -70,11 +68,11 @@ export function Register() {
                                       required isInvalid={isInvalid}
                                       onChange={(e) => setConfirmedPassword(e.target.value)} />
                         <Form.Control.Feedback type="invalid">
-                            Ваши пароли не совпадают
+                            Your passwords do not match
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Зарегистрироваться
+                        Register
                     </Button>
                 </Form>
             </Card.Body>

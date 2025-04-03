@@ -25,7 +25,7 @@ export function Login() {
     }
     return(
         <Card style={{width: '30%', margin: '50px auto'}}>
-            <Card.Header>Авторизация</Card.Header>
+            <Card.Header>Authorization</Card.Header>
             <Card.Body>
                 <Form onSubmit={(event) => loginToAccount(event)}>
                     <Form.Group className="mb-3" controlId="formEmail">
@@ -38,9 +38,9 @@ export function Login() {
                         <Form.Control type="password" placeholder="Password" autoComplete={'false'} value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </Form.Group>
                     <Button variant="primary" type="submit">
-                        Войти
+                        Login
                     </Button>
-                    <Card.Link style={{marginLeft: '15px'}} href="/registration">Регистрация</Card.Link>
+                    <Card.Link style={{marginLeft: '15px'}} href="/registration">Registration</Card.Link>
                 </Form>
             </Card.Body>
         </Card>

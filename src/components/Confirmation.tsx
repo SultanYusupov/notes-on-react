@@ -28,7 +28,7 @@ export function Confirmation() {
         }
     }, [disabledButton, seconds]);
     function getText() {
-        if (disabledButton) return <span>Кнопка будет доступна через {seconds} сек.</span>
+        if (disabledButton) return <span>The button will be available in {seconds} sec.</span>
     }
     const [confirm] = useConfirmMutation();
     async function repeatQuery() {
@@ -39,9 +39,9 @@ export function Confirmation() {
 
     return (
         <div>
-            <Alert key={'warning'} variant={'warning'}>На вашу почту {email} пришло письмо с подтверждением аккаунта.</Alert>
+            <Alert key={'warning'} variant={'warning'}>A confirmation email has been sent to {email}. Click on the confirmation link in the email to activate your account.</Alert>
             <div className={'d-flex gap-lg-3 align-items-center'}>
-                <Button disabled={disabledButton} onClick={() => repeatQuery()}>Отправить повторно</Button>
+                <Button disabled={disabledButton} onClick={() => repeatQuery()}>Resend</Button>
                 {getText()}
             </div>
         </div>
