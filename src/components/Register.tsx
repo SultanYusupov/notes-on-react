@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import {useRegistrationMutation} from "../state/api/auth.api.ts";
 import {iError} from "../interfaces/iError.ts";
 import {AuthResponse} from "../interfaces/AuthResponse.ts";
+import {useNavigate} from "react-router";
 
 export function Register() {
     const [email, setEmail] = useState<string>('sultansuzran@gmail.com');
@@ -13,6 +14,8 @@ export function Register() {
     const [text, setText] = useState('');
     const [displayWarning, setDisplayWarning] = useState(false);
     const [register] = useRegistrationMutation();
+    const navigate = useNavigate();
+
 
     function closeAlert() {
         setDisplayError(false);
@@ -21,19 +24,18 @@ export function Register() {
     }
     async function registerAccount() {
         const result = await register({email, password});
-
         if ((result as iError) !== undefined) {
-            setText((result as iError).error.data.message);
+            setText((result as iError).error?.data.message);
             setDisplayError(true);
         }
 
-        if (result.data !== undefined && (!(result as {data: AuthResponse}).data.user.isActivated)) {
-            setDisplayWarning(true);
-            setText('На вашу почту пришло письмо с подтверждением аккаунта');
+        if (!(result as {data: AuthResponse})?.data.user.isActivated) {
+            setEmail('');
+            setPassword('');
+            // setDisplayWarning(true);
+            // setText('На вашу почту пришло письмо с подтверждением аккаунта');
+            navigate('/confirm', {state: {email: email}});
         }
-
-        setEmail('');
-        setPassword('');
     }
    async function validateForm(e: React.FormEvent<HTMLFormElement>) {
        e.preventDefault();

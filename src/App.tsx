@@ -6,6 +6,7 @@ import {Form} from "react-bootstrap";
 import {Login} from "./components/Login.tsx";
 import {Register} from "./components/Register.tsx";
 import {Account} from "./components/Account.tsx";
+import {Confirmation} from "./components/Confirmation.tsx";
 
 function App() {
     function changeTheme() {
@@ -33,6 +34,7 @@ function App() {
             <Route path={'/'} element={<NoteList />}></Route>
             <Route path={'/login'} element={<Login />}></Route>
             <Route path={'/registration'} element={<Register />}></Route>
+            <Route path={'/confirm'} element={<Confirmation />}></Route>
             <Route path={'/:id'} element={<NoteContent />}></Route>
               <Route path={'/new'} element={<NoteContent />}></Route>
           </Routes>

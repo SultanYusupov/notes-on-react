@@ -25,6 +25,14 @@ export const authApi = api.injectEndpoints({
             }),
             invalidatesTags: (result, error) => [{ type: 'Auth', res: result, err: error }]
         }),
+        confirm: builder.mutation<void, string>({
+            query: (data) => ({
+                url: '/confirm',
+                body: {email: data},
+                method: 'POST',
+                credentials: 'include'
+            })
+        }),
         logout: builder.mutation<void, void>({
             query: () => ({
                 url: '/logout',
@@ -43,4 +51,4 @@ export const authApi = api.injectEndpoints({
     })
 })
 
-export const {useLoginMutation, useRegistrationMutation, useLogoutMutation, useUserQuery} = authApi;
+export const {useLoginMutation, useRegistrationMutation, useLogoutMutation, useUserQuery, useConfirmMutation} = authApi;
