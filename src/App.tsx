@@ -1,12 +1,12 @@
 import './App.scss'
 import {Route, Routes} from "react-router";
-import NoteList from "./components/NoteList.tsx";
-import {NoteContent} from "./components/NoteContent.tsx";
+import NoteListPage from "./pages/note-list.page.tsx";
+import {NoteContentPage} from "./pages/note-content.page.tsx";
 import {Form} from "react-bootstrap";
-import {Login} from "./components/Login.tsx";
-import {Register} from "./components/Register.tsx";
+import {LoginPage} from "./pages/login.page.tsx";
+import {RegisterPage} from "./pages/register.page.tsx";
 import {Account} from "./components/Account.tsx";
-import {Confirmation} from "./components/Confirmation.tsx";
+import {ConfirmPage} from "./pages/confirm.page.tsx";
 
 function App() {
     function changeTheme() {
@@ -31,12 +31,12 @@ function App() {
               <Account />
           </header>
           <Routes>
-            <Route path={'/'} element={<NoteList />}></Route>
-            <Route path={'/login'} element={<Login />}></Route>
-            <Route path={'/registration'} element={<Register />}></Route>
-            <Route path={'/confirm'} element={<Confirmation />}></Route>
-            <Route path={'/:id'} element={<NoteContent />}></Route>
-              <Route path={'/new'} element={<NoteContent />}></Route>
+            <Route path={'/'} element={<NoteListPage />}></Route>
+            <Route path={'/login'} element={<LoginPage />}></Route>
+            <Route path={'/registration'} element={<RegisterPage />}></Route>
+            <Route path={'/confirm'} element={<ConfirmPage />}></Route>
+            <Route path={'/:id'} element={<NoteContentPage />}></Route>
+              <Route path={'/new'} element={<NoteContentPage />}></Route>
           </Routes>
       </div>
       )

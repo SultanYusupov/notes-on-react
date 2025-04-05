@@ -2,10 +2,10 @@ import {Card, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router";
 import {iNote} from "../interfaces/iNote.ts";
-import {Header} from "./Header.tsx";
+import {Header} from "../components/Header.tsx";
 import {useCreateNoteMutation, useDeleteNoteMutation, useEditNoteMutation, useGetNoteByIdQuery} from "../state/api/note.api.ts";
 
-export function NoteContent() {
+export function NoteContentPage() {
     const {id} = useParams<string>();
     const noteId: number = Number(id);
     const [showEditIcon, setEditIcon] = useState(false);

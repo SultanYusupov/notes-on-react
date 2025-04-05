@@ -1,6 +1,6 @@
 import {iNote} from "../interfaces/iNote.ts";
-import NotePreview from "./NotePreview.tsx";
-import {Header} from "./Header.tsx";
+import NotePreview from "../components/NotePreview.tsx";
+import {Header} from "../components/Header.tsx";
 import {useNavigate} from "react-router";
 import {useGetNotesQuery} from "../state/api/note.api.ts";
 import {useState} from "react";
@@ -8,7 +8,7 @@ import {Alert, Button, Form, Pagination} from "react-bootstrap";
 import {useUserQuery} from "../state/api/auth.api.ts";
 import {skipToken} from "@reduxjs/toolkit/query";
 
-export default function NoteList() {
+export default function NoteListPage() {
     const [page, setPage] = useState(1);
     const [filterText, setFilterText] = useState('');
     const {data: profile} = useUserQuery();

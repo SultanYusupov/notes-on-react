@@ -5,7 +5,7 @@ import {useAppDispatch} from "../hooks/redux-hooks.ts";
 import {setAuth, setUser} from "../state/userSlice.ts";
 import {useNavigate} from "react-router";
 
-export function Login() {
+export function LoginPage() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const login = useLogin();

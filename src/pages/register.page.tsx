@@ -5,7 +5,7 @@ import {iError} from "../interfaces/iError.ts";
 import {AuthResponse} from "../interfaces/AuthResponse.ts";
 import {useNavigate} from "react-router";
 
-export function Register() {
+export function RegisterPage() {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [confirmedPassword, setConfirmedPassword] = useState<string>('');

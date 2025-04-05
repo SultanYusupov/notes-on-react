@@ -3,7 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import {useLocation, useNavigate} from "react-router";
 import {useConfirmMutation} from "../state/api/auth.api.ts";
 
-export function Confirmation() {
+export function ConfirmPage() {
     const {state} = useLocation();
     const {email} = state;
     const navigate = useNavigate();
