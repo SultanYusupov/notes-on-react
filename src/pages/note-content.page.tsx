@@ -19,7 +19,7 @@ export function NoteContentPage() {
     const [initialTitle, setInitialTitle] = useState('');
     const [initialText, setInitialText] = useState('');
     // id нет, это чтобы сервер сгенерировал его для новой записи
-    const [note, setNote] = useState<iNote>({title: '', text: '', dateCreate: ''});
+    const [note, setNote] = useState<iNote>({title: '', text: '', date_create: new Date()});
     useEffect(() => {
         if (noteId && existingNote) {
             setNote(existingNote);
@@ -39,7 +39,7 @@ export function NoteContentPage() {
         setEditIcon(false);
         const noteToSave = {
             ...note,
-            dateCreate: new Date().toString()
+            date_create: new Date()
         };
         if (!noteId) {
             createNote(noteToSave).then(res => {

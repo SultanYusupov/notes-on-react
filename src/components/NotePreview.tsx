@@ -55,7 +55,7 @@ export default function NotePreview({note}:{note: iNote}) {
         >
             <Toast.Header closeButton={false}>
                 <strong className="me-auto" onClick={() => navigate(`${note.id}`, {replace: false})}>{note.title}</strong>
-                <small onClick={() => navigate(`${note.id}`, {replace: false})}>{formatDate(note.dateCreate)}</small>
+                <small onClick={() => navigate(`${note.id}`, {replace: false})}>{formatDate(note.date_create)}</small>
                 <CloseButton onClick={() => remove(note.id!)}/>
             </Toast.Header>
             <Toast.Body onClick={() => navigate(`${note.id}`, {replace: false})}>{note.text}</Toast.Body>

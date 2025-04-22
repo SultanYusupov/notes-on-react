@@ -1,10 +1,6 @@
 export interface iNote {
-    id?: number,// TODO убрать вопросительный знак
+    id?: number,
     title: string,
     text: string,
-    dateCreate: string
+    date_create: Date // не camelCase, потому что в БД так же
 }
-
-// когда отправляем запрос на создание новой заметки, у него нет id
-// это как раз делает интерфейс, похожий на iNote, но без поля id
-export interface iNoteData extends Omit<iNote, 'id'>{}
