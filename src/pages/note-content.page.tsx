@@ -9,7 +9,9 @@ export function NoteContentPage() {
     const {id} = useParams<string>();
     const noteId = id ? Number(id) : null;
     const navigate = useNavigate();
-    const {data: existingNote} = useGetNoteByIdQuery(noteId!, {skip: !noteId});
+    // Пробовал и refetchOnMountOrArgChange и вернуть коллбэк с promise.abort, но для отмены лишнего запроса после удаления помогло только это
+    const [isDeleting, setIsDeleting] = useState(false);
+    const {data: existingNote} = useGetNoteByIdQuery(noteId!, {skip: !noteId || isDeleting});
     const [showEditIcon, setEditIcon] = useState(false);
     const [createNote] = useCreateNoteMutation();
     const [editNote] = useEditNoteMutation();
@@ -51,15 +53,16 @@ export function NoteContentPage() {
     function remove() {
         if (!noteId) return;
         setEditIcon(false);
+        setIsDeleting(true);
         deleteNote(noteId).then(() => navigate('/'));
     }
 
     return (
         <div style={{margin: '0 auto', width: '600px'}}>
             <Header style={{margin: '1rem 0', width: '100%', padding: '0.1rem'}} displayBackButton={true}>
-                {showEditIcon && <i className="bi bi-check-lg" role={"button"} onClick={() => save()}></i>}
+                {showEditIcon && <i className="bi bi-check-lg" role={"button"} onClick={save}></i>}
                 {noteId && <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}
-                    onClick={() => remove()}></i>}
+                    onClick={remove}></i>}
             </Header>
             <Card style={{width: '100%'}}>
                 <Card.Body>
