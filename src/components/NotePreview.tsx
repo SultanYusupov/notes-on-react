@@ -11,7 +11,7 @@ export default function NotePreview({note}:{note: iNote}) {
     function toggleCursorPointer(cursorStyle: string, borderStyle: string) {
         setToggleHover({cursor: cursorStyle, boxShadow: borderStyle})
     }
-    function formatDate(inputDateString:string) {
+    function formatDate(inputDateString:Date) {
         const inputDate:Date = new Date(inputDateString);
         const now = new Date();
         const diffInMs = now.getTime() - inputDate.getTime();
