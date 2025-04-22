@@ -25,7 +25,7 @@ function App() {
                       type="switch"
                       id="custom-switch"
                       label="Theme"
-                      onClick={() => changeTheme()}
+                      onClick={changeTheme}
                   />
               </Form>
               <Account />
