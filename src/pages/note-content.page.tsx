@@ -7,24 +7,26 @@ import {useCreateNoteMutation, useDeleteNoteMutation, useEditNoteMutation, useGe
 
 export function NoteContentPage() {
     const {id} = useParams<string>();
-    const noteId: number = Number(id);
-    const [showEditIcon, setEditIcon] = useState(false);
+    const noteId = id ? Number(id) : null;
     const navigate = useNavigate();
-    const {data: existingNote} = useGetNoteByIdQuery(noteId);
+    const {data: existingNote} = useGetNoteByIdQuery(noteId!, {skip: !noteId});
+    const [showEditIcon, setEditIcon] = useState(false);
     const [createNote] = useCreateNoteMutation();
     const [editNote] = useEditNoteMutation();
     const [deleteNote] = useDeleteNoteMutation();
-    const initialTitle = existingNote?.title ?? '';
-    const initialText = existingNote?.text ?? '';
+    const [initialTitle, setInitialTitle] = useState('');
+    const [initialText, setInitialText] = useState('');
     // id нет, это чтобы сервер сгенерировал его для новой записи
-    const [note, setNote] = useState<iNote>({title: initialTitle, text: initialText, dateCreate: ''});
+    const [note, setNote] = useState<iNote>({title: '', text: '', dateCreate: ''});
     useEffect(() => {
-        if (id && existingNote) {
+        if (noteId && existingNote) {
             setNote(existingNote);
+            setInitialTitle(existingNote.title);
+            setInitialText(existingNote.text);
         }
 
-    }, [existingNote, id]);
-    
+    }, [existingNote, noteId]);
+
     useEffect(() => {
         // галочка появляется только когда мы реально что-то изменили в тексте
         // если что-то написали, затем это стёрли, то изменений по факту нет
@@ -33,27 +35,31 @@ export function NoteContentPage() {
 
     function save() {
         setEditIcon(false);
-        note.dateCreate = new Date().toString();
-        if (Number.isNaN(noteId)) {
-            createNote(note).then(res => {
+        const noteToSave = {
+            ...note,
+            dateCreate: new Date().toString()
+        };
+        if (!noteId) {
+            createNote(noteToSave).then(res => {
                 if (res.data) navigate(`/${res.data.id}`);
             });
         }
         else {
-            editNote(note);
+            editNote(noteToSave);
         }
     }
-    function remove(id:number) {
+    function remove() {
+        if (!noteId) return;
         setEditIcon(false);
-        deleteNote(id).then(_ => navigate('/'));
+        deleteNote(noteId).then(() => navigate('/'));
     }
 
     return (
         <div style={{margin: '0 auto', width: '600px'}}>
-            <Header style={{margin: '1rem 0', with: '100%', padding: '0.1rem'}} displayBackButton={true}>
+            <Header style={{margin: '1rem 0', width: '100%', padding: '0.1rem'}} displayBackButton={true}>
                 {showEditIcon && <i className="bi bi-check-lg" role={"button"} onClick={() => save()}></i>}
-                {note.id && <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}
-                    onClick={() => remove(note.id!)}></i>}
+                {noteId && <i className="bi bi-trash3" style={{paddingLeft: '1rem'}} role={"button"}
+                    onClick={() => remove()}></i>}
             </Header>
             <Card style={{width: '100%'}}>
                 <Card.Body>
